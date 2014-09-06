@@ -47,7 +47,9 @@ module Upstream
             end
             component.each do |key, version|
               url = UPSTREAM_TRACKER_URL + version[:html]
-              download_html(url, version[:html])
+              path = File.join(get_config_dir,
+                               version[:html])
+              download_html(url, path)
               printf("Download ABI compat report: %s\n", url)
             end
           end
