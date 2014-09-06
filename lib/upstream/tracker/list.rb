@@ -39,7 +39,17 @@ module Upstream
       end
 
       desc "version LIBRARY", "List version of library"
-      def version
+      def version(library = "")
+        path = get_component_path
+        YAML.load_file(path).each do |key, component|
+          next unless key == library.downcase
+          path = File.join(get_config_dir,
+                           "compat_reports",
+                           key,
+                           "#{key}.yml")
+          printf("Versions: %s\n",
+                 YAML.load_file(path).keys.join(', '))
+        end
       end
 
       private
