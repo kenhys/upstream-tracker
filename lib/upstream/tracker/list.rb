@@ -46,11 +46,11 @@ module Upstream
 
       def fetch_index_html(options)
         html = {:data => nil, :charset => nil}
-          url = "http://upstream-tracker.org/"
-          html[:data] = open(url) do |file|
-            html[:charset] = file.charset
-            file.read
-          end
+        url = "http://upstream-tracker.org/"
+        html[:data] = open(url) do |file|
+          html[:charset] = file.charset
+          file.read
+        end
         html
       end
 
