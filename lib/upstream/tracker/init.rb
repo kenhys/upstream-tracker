@@ -1,5 +1,6 @@
 require 'thor'
 require 'fileutils'
+require 'pp'
 require 'upstream/tracker'
 
 module Upstream
@@ -29,7 +30,26 @@ module Upstream
         arg.split(/,/).each do |library|
           components = load_component
           if components.keys.include?(library)
-            fetch_versions_html(components[library])
+            html = fetch_versions_html(components[library])
+            path = File.join(get_config_dir,
+                             components[library][:html])
+            p path
+            #html = fetch_local_html(path)
+            component = extract_compat_reports(html)
+
+            path = File.join(get_config_dir,
+                             "compat_repors",
+                             library,
+                             "#{library}.yml")
+            FileUtils.mkdir_p(File.dirname(path))
+            File.open(path, "w+") do |file|
+              file.puts(YAML.dump(component))
+            end
+            component.each do |key, version|
+              url = UPSTREAM_TRACKER_URL + version[:html]
+              download_html(url, version[:html])
+              printf("Download ABI compat report: %s\n", url)
+            end
           end
         end
       end
