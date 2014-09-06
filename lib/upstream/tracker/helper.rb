@@ -46,6 +46,9 @@ module Upstream
         File.open(dest, "w+") do |file|
           file.puts(html[:data])
         end
+        config = load_config
+        wait_time = config["wait"] || 2
+        sleep wait_time
       end
 
       def fetch_html(url)
