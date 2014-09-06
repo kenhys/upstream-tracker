@@ -5,8 +5,8 @@ module Upstream
   module Tracker
     class Command < Thor
 
-      #desc "list SUBCOMMAND", "List [TARGET]"
-      #subcommand "list", List
+      desc "list [SUBCOMMAND]", "List [TARGET]"
+      subcommand "list", List
     end
   end
 end
