@@ -7,6 +7,9 @@ module Upstream
 
       desc "list [SUBCOMMAND]", "List [TARGET]"
       subcommand "list", List
+
+      desc "search SYMBOL", "Search symbol from http://upstream-tracker.org/."
+      subcommand "search", Search
     end
   end
 end
