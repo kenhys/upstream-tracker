@@ -1,3 +1,4 @@
+wait: 2
 default: gtk
 use: gst
 project:
