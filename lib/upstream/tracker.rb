@@ -1,4 +1,5 @@
 require "upstream/tracker/version"
+require "upstream/tracker/helper"
 require "upstream/tracker/config"
 require "upstream/tracker/list"
 require "upstream/tracker/search"
