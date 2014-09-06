@@ -11,6 +11,10 @@ module Upstream
       def library
       end
 
+      desc "version LIBRARY", "List version of library"
+      def version
+      end
+
     end
   end
 end
