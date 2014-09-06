@@ -46,18 +46,11 @@ module Upstream
 
       def fetch_index_html(options)
         html = {:data => nil, :charset => nil}
-        if options.has_key?("remote")
           url = "http://upstream-tracker.org/"
           html[:data] = open(url) do |file|
             html[:charset] = file.charset
             file.read
           end
-        else
-          path = File.dirname(__FILE__) + "/../../../top.html"
-          html[:data] = open(path) do |file|
-            file.read
-          end
-        end
         html
       end
 
