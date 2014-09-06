@@ -44,7 +44,7 @@ module Upstream
 
       private
 
-      def fetch_index_html(url)
+      def fetch_html(url)
         html = {:data => nil, :charset => nil}
         html[:data] = open(url) do |file|
           html[:charset] = file.charset
