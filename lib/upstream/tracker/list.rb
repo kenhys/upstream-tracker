@@ -42,7 +42,7 @@ module Upstream
       def version
       end
 
-    private
+      private
 
       def fetch_index_html(url)
         html = {:data => nil, :charset => nil}
