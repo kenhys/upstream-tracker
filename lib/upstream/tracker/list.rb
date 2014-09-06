@@ -19,32 +19,10 @@ module Upstream
           components = {}
           table.xpath("tr").each do |tr|
             unless tr.attribute("id").value =~ /^(top|bottom)Header/
-              label = tr.attribute("id").value
-              id = nil
-              html_file = nil
-              summary = nil
-              versions = nil
-              tr.xpath("td").each do |td|
-                case td.attribute("class").value
-                when "left"
-                  html_file = td.children.attribute("href").value
-                  id = html_file.sub(/versions\/(.+)\.html/, '\1')
-                when "summary"
-                  summary = td.children.text.sub(/ \(site, doc\)/, '')
-                when "results"
-                  versions = td.children.text
-                end
-                components[id] = {
-                  :id => id,
-                  :label => label,
-                  :html => html_file,
-                  :summary => summary,
-                  :versions => versions
-                }
-              end
-              printf "%30s: %s (%s versions)\n",
-              components[id][:label] + "(" + components[id][:id] + ")",
-              components[id][:summary], components[id][:versions]
+              component = extract_component(tr)
+              print_component(component)
+              id = component[:id]
+              components[id] = component
             end
           end
         end
@@ -71,6 +49,39 @@ module Upstream
           end
         end
         html
+      end
+
+      def extract_component(tr)
+        label = tr.attribute("id").value
+        id = nil
+        html_file = nil
+        summary = nil
+        versions = nil
+        tr.xpath("td").each do |td|
+          case td.attribute("class").value
+          when "left"
+            html_file = td.children.attribute("href").value
+            id = html_file.sub(/versions\/(.+)\.html/, '\1')
+          when "summary"
+            summary = td.children.text.sub(/ \(site, doc\)/, '')
+          when "results"
+            versions = td.children.text
+          end
+        end
+        component = {
+          :id => id,
+          :label => label,
+          :html => html_file,
+          :summary => summary,
+          :versions => versions
+        }
+      end
+
+      def print_component(component)
+        printf("%30s: %s (%s versions)\n",
+               component[:label] + "(" + component[:id] + ")",
+               component[:summary],
+               component[:versions])
       end
     end
   end
