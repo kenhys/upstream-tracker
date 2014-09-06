@@ -1,4 +1,5 @@
 require "upstream/tracker/version"
+require "upstream/tracker/command"
 
 module Upstream
   module Tracker
