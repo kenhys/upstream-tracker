@@ -25,6 +25,10 @@ module Upstream
         end
       end
 
+      def get_component_path
+        File.join(get_config_dir, COMPONENT_FILE)
+      end
+
       def save_components(components)
         path = File.join(get_config_dir, COMPONENT_FILE)
         File.open(path, "w+") do |file|
