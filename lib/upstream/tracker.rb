@@ -1,4 +1,5 @@
 require "upstream/tracker/version"
+require "upstream/tracker/config"
 require "upstream/tracker/list"
 require "upstream/tracker/search"
 require "upstream/tracker/update"
@@ -7,6 +8,9 @@ require "upstream/tracker/use"
 module Upstream
   module Tracker
     class Command < Thor
+
+      desc "config [SUBCOMMAND]", "Config [TARGET]"
+      subcommand "config", Config
 
       desc "list [SUBCOMMAND]", "List [TARGET]"
       subcommand "list", List
