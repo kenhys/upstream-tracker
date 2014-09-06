@@ -21,6 +21,7 @@ module Upstream
 
       desc "library [LIBRARY]", "Initialize library"
       option :list, :required => false
+      option :version, :required => false
       def library(arg = "")
         if options.has_key?("list")
           #p options
@@ -46,6 +47,10 @@ module Upstream
               file.puts(YAML.dump(component))
             end
             component.each do |key, version|
+              if options.has_key?("version")
+                next unless key == options["version"]
+              end
+
               url = UPSTREAM_TRACKER_URL + version[:html]
               path = File.join(get_config_dir,
                                version[:html])
