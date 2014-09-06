@@ -49,8 +49,18 @@ module Upstream
               url = UPSTREAM_TRACKER_URL + version[:html]
               path = File.join(get_config_dir,
                                version[:html])
-              download_html(url, path)
+              p path
               printf("Download ABI compat report: %s\n", url)
+              download_html(url, path)
+
+              html = fetch_local_html(path)
+              abi_compat_report = extract_abi_compat_report(html)
+              path = File.join(get_config_dir,
+                               version[:html].sub(/(.+)\.html$/, '\1.yml'))
+              p path
+              File.open(path, "w+") do |file|
+                file.puts(YAML.dump(abi_compat_report))
+              end
             end
           end
         end
@@ -98,10 +108,73 @@ module Upstream
             end
             if compat[:backward_compatibility].end_with?("\%")
               component[version] = compat
+              p compat
             end
           end
         end
         component
+      end
+
+      def added_element?(element)
+        return nil unless element.attribute("name")
+        element.attribute("name").value == "Added"
+      end
+
+      def removed_element?(element)
+        return nil unless element.attribute("name")
+        element.attribute("name").value == "Removed"
+      end
+
+      def header_element?(element)
+        return nil unless element.attribute("class")
+        element.attribute("class").value == "h_name"
+      end
+
+      def library_element?(element)
+        return nil unless element.attribute("class")
+        element.attribute("class").value == "lib_name"
+      end
+
+      def function_element?(element)
+        return nil unless element.attribute("class")
+        element.attribute("class").value == "iname"
+      end
+
+      def extract_abi_compat_report(html)
+        doc = Nokogiri::HTML.parse(html[:data], nil, html[:charset])
+        component = {}
+        @added = nil
+        @removed = nil
+        functions = []
+        header = nil
+        library = nil
+        version = doc.xpath("//body/div/table[1][@class='summary']/tr[3]/td").text
+        doc.xpath("//body/div").children.each do |element|
+          if added_element?(element)
+            @added = true
+          elsif removed_element?(element)
+            @removed = true
+            @added = nil
+          elsif header_element?(element)
+            header = element.text
+          elsif library_element?(element)
+            library = element.text
+          elsif function_element?(element)
+            symbol = element.text.split('(')[0]
+            function = {
+              :prototype => element.text,
+              :symbol => symbol,
+              :header => header,
+              :library_so => library,
+              :library_name => library.split('-')[0],
+              :added => @added ? version : nil,
+              :removed => @removed ? version : nil,
+            }
+            functions << function
+          else
+          end
+        end
+        functions
       end
     end
   end
