@@ -1,0 +1,6 @@
+default: gtk
+use: gst
+project:
+  - gtk: gtk+,glib
+  - sylpheed: gtk+,glib
+  - gst: gstreamer,gst-plugins-base
