@@ -48,6 +48,39 @@ module Upstream
         html
       end
 
+      def extract_compat_reports(html)
+        doc = Nokogiri::HTML.parse(html[:data], nil, html[:charset])
+        component = {}
+        doc.xpath("//table[@class='wikitable']").each do |table|
+          table.xpath("tr[@id]").each do |tr|
+            compat = {}
+            version = nil
+            tr.children.each_with_index do |td, index|
+              if td.name == "th"
+                version = td.text
+                compat[:version] = version
+              else
+                case index
+                when 4
+                  # Backward Compatibility
+                  td.xpath("a").each do |a|
+                    compat[:html] = a.attribute("href").value.sub(/^\.\.\//, '')
+                  end
+                  compat[:backward_compatibility] = td.text
+                when 5
+                  compat[:added] = td.text.sub(/ new/, '').to_i
+                when 6
+                  compat[:removed] = td.text.sub(/ removed/, '').to_i
+                end
+              end
+            end
+            if compat[:backward_compatibility].end_with?("\%")
+              component[version] = compat
+            end
+          end
+        end
+        component
+      end
     end
   end
 end
