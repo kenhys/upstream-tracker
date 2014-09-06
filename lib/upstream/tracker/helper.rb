@@ -29,6 +29,10 @@ module Upstream
         File.join(get_config_dir, COMPONENT_FILE)
       end
 
+      def load_component
+        YAML.load_file(get_component_path)
+      end
+
       def save_components(components)
         path = File.join(get_config_dir, COMPONENT_FILE)
         File.open(path, "w+") do |file|
