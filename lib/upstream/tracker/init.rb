@@ -137,7 +137,8 @@ module Upstream
 
       def library_element?(element)
         return nil unless element.attribute("class")
-        element.attribute("class").value == "lib_name"
+        element.attribute("class").value == "lib_name" or
+          element.attribute("class").value == "dylib_name"
       end
 
       def function_element?(element)
