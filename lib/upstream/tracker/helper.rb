@@ -39,6 +39,16 @@ module Upstream
           file.puts(YAML.dump(components))
         end
       end
+
+      def fetch_html(url)
+        html = {:data => nil, :charset => nil}
+        html[:data] = open(url) do |file|
+          html[:charset] = file.charset
+          file.read
+        end
+        html
+      end
+
     end
   end
 end

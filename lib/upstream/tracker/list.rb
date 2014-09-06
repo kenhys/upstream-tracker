@@ -44,15 +44,6 @@ module Upstream
 
       private
 
-      def fetch_html(url)
-        html = {:data => nil, :charset => nil}
-        html[:data] = open(url) do |file|
-          html[:charset] = file.charset
-          file.read
-        end
-        html
-      end
-
       def extract_component(tr)
         label = tr.attribute("id").value
         id = nil
