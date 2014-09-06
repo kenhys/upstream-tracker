@@ -10,6 +10,10 @@ module Upstream
 
       desc "search SYMBOL", "Search symbol from http://upstream-tracker.org/."
       subcommand "search", Search
+
+      desc "use LIBRARY", "Specify libraries which you want to use."
+      subcommand "use", Use
+
     end
   end
 end
