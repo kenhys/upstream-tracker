@@ -31,6 +31,10 @@ module Upstream
             end
           end
         else
+          path = get_component_path
+          YAML.load_file(path).each do |key, component|
+            print_component(component)
+          end
         end
       end
 
