@@ -65,7 +65,7 @@ module Upstream
           when "summary"
             summary = td.children.text.sub(/ \(site, doc\)/, '')
           when "results"
-            versions = td.children.text
+            versions = td.children.text.to_i
           end
         end
         component = {
