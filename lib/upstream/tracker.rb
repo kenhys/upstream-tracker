@@ -1,6 +1,7 @@
 require "upstream/tracker/version"
 require "upstream/tracker/list"
 require "upstream/tracker/search"
+require "upstream/tracker/update"
 require "upstream/tracker/use"
 
 module Upstream
@@ -9,6 +10,9 @@ module Upstream
 
       desc "list [SUBCOMMAND]", "List [TARGET]"
       subcommand "list", List
+
+      desc "update LIBRARY", "Update ABI/API changes information."
+      subcommand "update", Update
 
       desc "search SYMBOL", "Search symbol from http://upstream-tracker.org/."
       subcommand "search", Search
