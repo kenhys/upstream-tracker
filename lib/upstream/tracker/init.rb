@@ -38,7 +38,7 @@ module Upstream
             component = extract_compat_reports(html)
 
             path = File.join(get_config_dir,
-                             "compat_repors",
+                             "compat_reports",
                              library,
                              "#{library}.yml")
             FileUtils.mkdir_p(File.dirname(path))
