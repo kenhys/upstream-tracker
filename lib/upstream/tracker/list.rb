@@ -29,8 +29,8 @@ module Upstream
             if options.has_key?("remote")
               save_components(components)
             end
-          else
           end
+        else
         end
       end
 
