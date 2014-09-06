@@ -7,6 +7,7 @@ module Upstream
 
     CONFIG_FILE = 'upstream-tracker.yml'
     COMPONENT_FILE = 'components.yml'
+    UPSTREAM_TRACKER_URL = "http://upstream-tracker.org/"
 
     class Config < Thor
 
