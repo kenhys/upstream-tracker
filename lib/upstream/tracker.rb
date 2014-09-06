@@ -1,6 +1,7 @@
 require "upstream/tracker/version"
 require "upstream/tracker/helper"
 require "upstream/tracker/config"
+require "upstream/tracker/init"
 require "upstream/tracker/list"
 require "upstream/tracker/search"
 require "upstream/tracker/update"
@@ -12,6 +13,9 @@ module Upstream
 
       desc "config [SUBCOMMAND]", "Config [TARGET]"
       subcommand "config", Config
+
+      desc "init [SUBCOMMAND]", "Initialize configuration"
+      subcommand "init", Init
 
       desc "list [SUBCOMMAND]", "List [TARGET]"
       subcommand "list", List
