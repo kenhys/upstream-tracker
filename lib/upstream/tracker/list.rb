@@ -20,7 +20,6 @@ module Upstream
           table.xpath("tr").each do |tr|
             unless tr.attribute("id").value =~ /^(top|bottom)Header/
               label = tr.attribute("id").value
-              puts label
               id = nil
               html_file = nil
               summary = nil
@@ -43,6 +42,9 @@ module Upstream
                   :versions => versions
                 }
               end
+              printf "%30s: %s (%s versions)\n",
+              components[id][:label] + "(" + components[id][:id] + ")",
+              components[id][:summary], components[id][:versions]
             end
           end
         end
