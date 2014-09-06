@@ -14,23 +14,23 @@ module Upstream
       option :remote, :required => false
       def library
         if options.has_key?("remote")
-        html = fetch_index_html(options)
-        doc = Nokogiri::HTML.parse(html[:data], nil, html[:charset])
-        doc.xpath("//table[@id='Components']").each do |table|
-          components = {}
-          table.xpath("tr").each do |tr|
-            unless tr.attribute("id").value =~ /^(top|bottom)Header/
-              component = extract_component(tr)
-              print_component(component)
-              id = component[:id]
-              components[id] = component
+          html = fetch_index_html(options)
+          doc = Nokogiri::HTML.parse(html[:data], nil, html[:charset])
+          doc.xpath("//table[@id='Components']").each do |table|
+            components = {}
+            table.xpath("tr").each do |tr|
+              unless tr.attribute("id").value =~ /^(top|bottom)Header/
+                component = extract_component(tr)
+                print_component(component)
+                id = component[:id]
+                components[id] = component
+              end
             end
+            if options.has_key?("remote")
+              save_components(components)
+            end
+          else
           end
-          if options.has_key?("remote")
-            save_components(components)
-          end
-        else
-        end
         end
       end
 
