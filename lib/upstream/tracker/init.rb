@@ -45,6 +45,7 @@ module Upstream
         File.open(path, "w+") do |file|
           file.puts(html[:data])
         end
+        html
       end
 
     end
