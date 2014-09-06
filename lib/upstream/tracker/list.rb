@@ -13,6 +13,7 @@ module Upstream
       desc "library", "List libraries"
       option :remote, :required => false
       def library
+        if options.has_key?("remote")
         html = fetch_index_html(options)
         doc = Nokogiri::HTML.parse(html[:data], nil, html[:charset])
         doc.xpath("//table[@id='Components']").each do |table|
@@ -28,6 +29,8 @@ module Upstream
           if options.has_key?("remote")
             save_components(components)
           end
+        else
+        end
         end
       end
 
