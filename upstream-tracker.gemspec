@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Upstream::Tracker::VERSION
   spec.authors       = ["HAYASHI Kentaro"]
   spec.email         = ["kenhys@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Tool for checking API/ABI changes}
+  spec.description   = %q{Command line tool to search API/ABI changes which use http://upstream-tracker.org/.}
+  spec.homepage      = "https://github.com/kenhys/upstream-tracker"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
