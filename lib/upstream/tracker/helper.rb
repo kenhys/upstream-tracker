@@ -40,6 +40,14 @@ module Upstream
         end
       end
 
+      def download_html(url, dest)
+        html = fetch_html(url)
+        FileUtils.mkdir_p(File.dirname(dest))
+        File.open(dest, "w+") do |file|
+          file.puts(html[:data])
+        end
+      end
+
       def fetch_html(url)
         html = {:data => nil, :charset => nil}
         html[:data] = open(url) do |file|
