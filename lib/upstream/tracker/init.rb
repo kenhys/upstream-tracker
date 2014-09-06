@@ -22,6 +22,7 @@ module Upstream
       desc "library [LIBRARY]", "Initialize library"
       option :list, :required => false
       option :version, :required => false
+      option :cache, :required => false
       def library(arg = "")
         if options.has_key?("list")
           #p options
@@ -31,11 +32,13 @@ module Upstream
         arg.split(/,/).each do |library|
           components = load_component
           if components.keys.include?(library)
-            html = fetch_versions_html(components[library])
-            path = File.join(get_config_dir,
-                             components[library][:html])
-            p path
-            #html = fetch_local_html(path)
+            if options.has_key?("cache")
+              path = File.join(get_config_dir,
+                               components[library][:html])
+              html = fetch_local_html(path)
+            else
+              html = fetch_versions_html(components[library])
+            end
             component = extract_compat_reports(html)
 
             path = File.join(get_config_dir,
@@ -55,8 +58,10 @@ module Upstream
               path = File.join(get_config_dir,
                                version[:html])
               p path
-              printf("Download ABI compat report: %s\n", url)
-              download_html(url, path)
+              unless options.has_key?("cache")
+                printf("Download ABI compat report: %s\n", url)
+                download_html(url, path)
+              end
 
               html = fetch_local_html(path)
               abi_compat_report = extract_abi_compat_report(html)
