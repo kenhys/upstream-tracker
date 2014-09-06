@@ -12,13 +12,7 @@ module Upstream
       end
 
       def get_config_path
-        path = File.join(get_config_dir, CONFIG_FILE)
-        unless File.exist?(path)
-          File.open(path, "w+") do |file|
-            file.puts(YAML.dump({}))
-          end
-        end
-        path
+        File.join(get_config_dir, CONFIG_FILE)
       end
 
       def load_config
