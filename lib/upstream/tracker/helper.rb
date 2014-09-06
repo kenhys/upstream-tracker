@@ -57,6 +57,14 @@ module Upstream
         html
       end
 
+      def fetch_local_html(path)
+        html = {:data => nil, :charset => nil}
+        html[:data] = open(path) do |file|
+          file.read
+        end
+        html
+      end
+
     end
   end
 end
