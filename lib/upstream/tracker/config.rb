@@ -6,6 +6,7 @@ module Upstream
   module Tracker
 
     CONFIG_FILE = 'upstream-tracker.yml'
+    COMPONENT_FILE = 'components.yml'
 
     class Config < Thor
 

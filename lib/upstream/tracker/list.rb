@@ -25,6 +25,9 @@ module Upstream
               components[id] = component
             end
           end
+          if options.has_key?("remote")
+            save_components(components)
+          end
         end
       end
 

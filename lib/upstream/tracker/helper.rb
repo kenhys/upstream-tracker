@@ -25,6 +25,12 @@ module Upstream
         end
       end
 
+      def save_components(components)
+        path = File.join(get_config_dir, COMPONENT_FILE)
+        File.open(path, "w+") do |file|
+          file.puts(YAML.dump(components))
+        end
+      end
     end
   end
 end
