@@ -154,7 +154,7 @@ module Upstream
         header = nil
         library = nil
         version = doc.xpath("//body/div/table[1][@class='summary']/tr[3]/td").text
-        doc.xpath("//body/div").children.each do |element|
+        doc.xpath("//body/div[1]").children.each do |element|
           if added_element?(element)
             @added = true
           elsif removed_element?(element)
